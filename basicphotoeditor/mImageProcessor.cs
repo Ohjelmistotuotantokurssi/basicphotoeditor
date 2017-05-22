@@ -7,6 +7,7 @@ using System.IO;
 using System.Drawing;
 using ImageProcessor.Imaging;
 using ImageProcessor;
+using System.Diagnostics;
 
 namespace basicphotoeditor
 {
@@ -22,7 +23,7 @@ namespace basicphotoeditor
             //First, check that inputfiles exist
             if (!File.Exists(filepath1) || !File.Exists(filepath2))
             {
-                Console.WriteLine("File not found, operation cancelled");
+                Debug.WriteLine("File not found, operation cancelled");
                 return false;
             }
             else

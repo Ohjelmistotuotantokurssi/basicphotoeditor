@@ -9,7 +9,7 @@ namespace basicphotoeditor
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application. 
+        /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
@@ -19,8 +19,13 @@ namespace basicphotoeditor
             Application.Run(new Form1());
         }
 
+        public static void openImage()
+        {
+           
+        }
+
         
-        public static void MergeImages()
+        public static void mergeImages()
         {
             //Initialize mImageProcessor helper class that is used for operation
             mImageProcessor imageProcessor = new mImageProcessor();
