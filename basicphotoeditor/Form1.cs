@@ -24,7 +24,6 @@ namespace basicphotoeditor
         private void onClick(object sender, EventArgs e)
         {            
             Debug.WriteLine(TAG + ": onClick()");
-
             openFileDialog();
         }
 
@@ -35,7 +34,7 @@ namespace basicphotoeditor
 
             this.openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Title = "Select image file";
-            openFileDialog1.Filter = "Image files |*.jpg;*.png;*.tga;*.gif;*.tif;*.tiff"; //Limit selection to image files
+            openFileDialog1.Filter = "Image files |*.jpg;*.jpeg;*.png;*.tga;*.gif;*.tif;*.tiff;*.bmp"; //Limit selection to image files
             openFileDialog1.CheckFileExists = true;
             openFileDialog1.CheckPathExists = true;
 
@@ -44,6 +43,7 @@ namespace basicphotoeditor
                 string filepath = openFileDialog1.FileName;
                 Debug.WriteLine(filepath);
                 setTextBox(filepath);
+                Program.loadImage(filepath);
             }
         }
 

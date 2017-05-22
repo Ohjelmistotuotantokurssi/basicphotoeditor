@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,6 +12,8 @@ namespace basicphotoeditor
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        private static mImage image = new mImage();
+
         [STAThread]
         static void Main()
         {
@@ -19,14 +22,15 @@ namespace basicphotoeditor
             Application.Run(new Form1());
         }
 
-        public static void openImage()
+        public static void loadImage(string filepath)
         {
-           
+            image.setPath(filepath);
         }
-
         
         public static void mergeImages()
         {
+            // EXAMPLE:
+            //
             //Initialize mImageProcessor helper class that is used for operation
             mImageProcessor imageProcessor = new mImageProcessor();
 
