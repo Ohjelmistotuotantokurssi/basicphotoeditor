@@ -1,30 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace basicphotoeditor
-{   
+{
     public partial class Form1 : Form
     { 
-        private string TAG; //Use tag in debug messages to identify source class
+        private string TAG = "Form1"; //Use tag in debug messages to identify source class
 
         public Form1()
         {
-            InitializeComponent();
-            TAG = GetType().Name;        
+            InitializeComponent();      
         }
 
         private void onClick(object sender, EventArgs e)
-        {            
-            Debug.WriteLine(TAG + ": onClick()");
-            openFileDialog();
+        {
+            Button button = sender as Button;
+            if (button == null)
+            {
+                return;
+            }
+            else if (button == buttonOpen)
+            { 
+                Debug.WriteLine(TAG + ": buttonOpen: onClick()");
+                openFileDialog();
+            }
+            else if(button == buttonSave)
+            {
+                //Show savefile dialog and save the file
+                Debug.WriteLine(TAG + ": buttonSave: onClick()");
+                saveFileDialog();
+            }
         }
 
         //This function initializes and opens file picker dialog
@@ -52,9 +59,44 @@ namespace basicphotoeditor
             Debug.WriteLine(TAG + ": openFileDialog1_FileOk()");
         }
 
-        private void setTextBox(string filepath)
+        private void saveFileDialog()
         {
-            this.textBox1.Text = filepath;
+            this.saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Title = "Save image file";
+            saveFileDialog1.Filter = "Jpeg image|*.jpg|Bitmap image|*.bmp|Gif image|.gif";
+           // saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK) //Filename cannot be blank
+            {
+                Program.saveImage(saveFileDialog1.FileName);
+            }
         }
+
+        private void saveFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            Debug.WriteLine(TAG + ":saveFileDialog_FileOk()");
+        }
+
+        private void setTextBox(string path)
+        {
+            this.textBoxFilepath.Text = path;
+        }
+
+        private void onCheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+
+            if(checkBox == null)
+            {
+                return;
+            }
+            else if(checkBox == checkBoxGrayscaleToggle)
+            {
+                Program.toggleEffect(mImageProcessor.GREYSCALE, checkBox.Checked);
+            }
+
+        }
+
+
     }
 }

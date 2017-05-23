@@ -22,6 +22,9 @@ namespace basicphotoeditor
 
     class mImageProcessor
     {
+        //Effect IDs
+        public const int GREYSCALE = 1;
+        public const int RESIZE = 2;
 
         //Converts image bytearray to greyscale bytearray
         public byte[] toGreyScale(byte[] imageBytes)
