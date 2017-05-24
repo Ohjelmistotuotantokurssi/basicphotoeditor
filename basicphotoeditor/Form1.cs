@@ -48,10 +48,30 @@ namespace basicphotoeditor
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string filepath = openFileDialog1.FileName;
-                Debug.WriteLine(filepath);
-                setTextBox(filepath);
+                Debug.WriteLine(filepath);                
                 Program.loadImage(filepath);
+
+                initializeUI();
             }
+        }
+        private void initializeUI()
+        {
+            //Main UI
+            setTextBox(Program.getImage().getPath());
+
+            //Resize
+            int x = Program.getImageX();
+            int y = Program.getImageY();
+            double ratio = Program.getImageAspectRatio();
+            string ratioFraction = Program.getImageAspectRatioAsFraction();
+            textBoxResizeOrigX.Text = x.ToString();
+            textBoxResizeOrigY.Text = y.ToString();
+            textBoxResizeNewX.Text = x.ToString();
+            textBoxResizeNewY.Text = y.ToString();
+            labelResizeOldAspect.Text = ratioFraction;
+            labelResizeNewAspect.Text = ratioFraction;
+
+            //TODO: Initialize rest of the UI
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -64,7 +84,6 @@ namespace basicphotoeditor
             this.saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Title = "Save image file";
             saveFileDialog1.Filter = "Jpeg image|*.jpg|Bitmap image|*.bmp|Gif image|.gif";
-           // saveFileDialog1.ShowDialog();
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK) //Filename cannot be blank
             {
@@ -90,13 +109,25 @@ namespace basicphotoeditor
             {
                 return;
             }
-            else if(checkBox == checkBoxGrayscaleToggle)
+            if(checkBox == checkBoxGrayscale)
             {
-                Program.toggleEffect(mImageProcessor.GREYSCALE, checkBox.Checked);
+                Program.toggleSetting(mImageProcessor.GREYSCALE, checkBox.Checked);
+            }
+            if(checkBox == checkBoxResize)
+            {
+                Program.toggleSetting(mImageProcessor.RESIZE, checkBox.Checked);
             }
 
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            //TODO: Merge textbox functions to single function, use onCheckedChanged() as reference
+        }
 
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            //TODO: Merge textbox functions to single function, use onCheckedChanged() as reference
+        }
     }
 }

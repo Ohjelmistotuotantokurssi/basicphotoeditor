@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace basicphotoeditor
 
         public static bool greyScaleEnabled { get; set; }
         public static bool resizeEnabled { get; set; }
+        public static bool lockedAspect { get; set; }
 
         [STAThread]
         static void Main()
@@ -63,9 +65,50 @@ namespace basicphotoeditor
             image.setPath(filepath);
         }
 
-        public static void toggleEffect(int effect, bool value)
+        public static mImage getImage()
         {
-            switch (effect)
+            return image;
+        }
+
+        public static int getImageX()
+        {
+            if (!image.fileExists())
+            {
+                return 0;
+            }
+            return image.getImage().Width;
+        }
+
+        public static int getImageY()
+        {
+            if (!image.fileExists())
+            {
+                return 0;
+            }
+            return image.getImage().Height;
+        }
+
+        public static double getImageAspectRatio()
+        {
+            if (!image.fileExists())
+            {
+                return 1F;
+            }
+            double ratio = (double)image.getImage().Width / (double)image.getImage().Height;
+            return ratio;
+        }
+
+        public static string getImageAspectRatioAsFraction()
+        {
+            double ratio = getImageAspectRatio();
+            mMath math = new mMath();
+            Fraction fraction = math.RealToFraction(ratio, 0.01);
+            return fraction.N.ToString() + ":" + fraction.D.ToString();
+        }
+
+        public static void toggleSetting(int setting, bool value)
+        {
+            switch (setting)
             {
                 case mImageProcessor.GREYSCALE:
                     greyScaleEnabled = value;
@@ -73,25 +116,12 @@ namespace basicphotoeditor
                 case mImageProcessor.RESIZE:
                     resizeEnabled = value;
                     return;
+                case mImageProcessor.LOCKEDASPECT:
+                    lockedAspect = value;
+                    return;
                 default:
                     return;
             }
-        }
-        
-        public static void mergeImages()
-        {
-            // EXAMPLE:
-            //
-            //Initialize mImageProcessor helper class that is used for operation
-            mImageProcessor imageProcessor = new mImageProcessor();
-
-            //Method calls for three files; inpu1, input2 and output
-            string inputa = @"<path for first file>";
-            string inputb = @"<path for second file";
-            string output = @"<path where output file will be saved>";
-
-            //Call MergeImages method from helper class
-            imageProcessor.MergeImages(inputa, inputb, output);
-        }
+        }   
     }
 }
