@@ -16,6 +16,7 @@ namespace basicphotoeditor
          * 24.5.2017 - Created by Samuli Kumo
          */
 
+
         /*
          * RealToFraction converter function
          * 
@@ -23,10 +24,11 @@ namespace basicphotoeditor
          * https://www.maa.org/sites/default/files/pdf/upload_library/22/Allendoerfer/1982/0025570x.di021121.02p0002y.pdf
          * 
          * C# implementation by Kay Zed
-         * https://stackoverflow.com/questions/5124743/algorithm-for-simplifying-decimal-to-fractions/42085412#42085412
+         * https://stackoverflow.com/a/32903747
          */
         public Fraction RealToFraction(double value, double accuracy)
         {
+
             if (accuracy <= 0.0 || accuracy >= 1.0)
             {
                 throw new ArgumentOutOfRangeException("accuracy", "Must be > 0 and < 1.");
