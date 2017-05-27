@@ -60,6 +60,7 @@
     <Compile Include="mImage.cs" />
     <Compile Include="mImageProcessor.cs" />
     <Compile Include="mMath.cs" />
+    <Compile Include="ProcessSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

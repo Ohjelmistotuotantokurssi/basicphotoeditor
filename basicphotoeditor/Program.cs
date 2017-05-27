@@ -19,6 +19,8 @@ namespace basicphotoeditor
 
         public static bool greyScaleEnabled { get; set; }
         public static bool resizeEnabled { get; set; }
+        public static int xSize { get; set; }
+        public static int ySize { get; set; }
         public static bool lockedAspect { get; set; }
 
         [STAThread]
@@ -29,25 +31,26 @@ namespace basicphotoeditor
             Application.Run(new Form1());
         }
 
-        public static void saveImage(string path)
+        public static void saveImage(string path,ProcessSettings settings)
         {
             mImageProcessor imageProcessor = new mImageProcessor();
             byte[] imageBytes = image.getByteArray();
-            byte[] outputBytes = null;            
+            byte[] tempBytes = imageBytes;
+            byte[] outputBytes = null;          
 
-            if (greyScaleEnabled)
+            if (settings.filterGrayscale)
             {
-                outputBytes = imageProcessor.toGreyScale(imageBytes);
+                tempBytes = imageProcessor.toGreyScale(tempBytes);
             }
-            if (resizeEnabled)
+            if (settings.resizeEnable)
             {
-                //Add resize function here
+                tempBytes = imageProcessor.resize(tempBytes, settings.resizeX, settings.resizeY, settings.resizeLockAspect);
             }
-
+            
+            outputBytes = tempBytes;
             if(outputBytes != null)
             {
-                writeFile(outputBytes, path);
-               
+                writeFile(outputBytes, path);               
             }
         }
 
@@ -104,24 +107,6 @@ namespace basicphotoeditor
             mMath math = new mMath();
             Fraction fraction = math.RealToFraction(ratio, 0.01);
             return fraction.N.ToString() + ":" + fraction.D.ToString();
-        }
-
-        public static void toggleSetting(int setting, bool value)
-        {
-            switch (setting)
-            {
-                case mImageProcessor.GREYSCALE:
-                    greyScaleEnabled = value;
-                    return;
-                case mImageProcessor.RESIZE:
-                    resizeEnabled = value;
-                    return;
-                case mImageProcessor.LOCKEDASPECT:
-                    lockedAspect = value;
-                    return;
-                default:
-                    return;
-            }
-        }   
+        } 
     }
 }

@@ -30,15 +30,18 @@ namespace basicphotoeditor
             {
                 //Show savefile dialog and save the file
                 Debug.WriteLine(TAG + ": buttonSave: onClick()");
-                saveFileDialog();
+                //Fetch enabled settings and their values
+                ProcessSettings settings = fetchSettings();
+                //Open save dialog
+                saveFileDialog(settings);
             }
         }
 
-        //This function initializes and opens file picker dialog
+       
         private void openFileDialog()
-        {
-           Debug.WriteLine(TAG + ": openFileDialog()");
+        {   //This function initializes and opens file picker dialog
 
+            Debug.WriteLine(TAG + ": openFileDialog()");
             this.openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Title = "Select image file";
             openFileDialog1.Filter = "Image files |*.jpg;*.jpeg;*.png;*.tga;*.gif;*.tif;*.tiff;*.bmp"; //Limit selection to image files
@@ -50,7 +53,6 @@ namespace basicphotoeditor
                 string filepath = openFileDialog1.FileName;
                 Debug.WriteLine(filepath);                
                 Program.loadImage(filepath);
-
                 initializeUI();
             }
         }
@@ -71,7 +73,7 @@ namespace basicphotoeditor
             labelResizeOldAspect.Text = ratioFraction;
             labelResizeNewAspect.Text = ratioFraction;
 
-            //TODO: Initialize rest of the UI
+            //TODO: Initialize rest of the UI as functions are added
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -79,15 +81,15 @@ namespace basicphotoeditor
             Debug.WriteLine(TAG + ": openFileDialog1_FileOk()");
         }
 
-        private void saveFileDialog()
+        private void saveFileDialog(ProcessSettings settings)
         {
             this.saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Title = "Save image file";
-            saveFileDialog1.Filter = "Jpeg image|*.jpg|Bitmap image|*.bmp|Gif image|.gif";
+            saveFileDialog1.Filter = "JPEG |*.JPG;*.JPEG|BMP|*.BMP;*.RLE|Compuserve GIF|*.GIF|TIFF|*.TIF;*.TIFF|PNG|*.PNG;*.PNS|Targa|*.TGA;*.VDA;*.ICB;*.VSB";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK) //Filename cannot be blank
             {
-                Program.saveImage(saveFileDialog1.FileName);
+                Program.saveImage(saveFileDialog1.FileName,settings);
             }
         }
 
@@ -101,33 +103,46 @@ namespace basicphotoeditor
             this.textBoxFilepath.Text = path;
         }
 
-        private void onCheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = sender as CheckBox;
+        private ProcessSettings fetchSettings()
+        {   //Store user-selected settings and values to ProcessSettings object
+            ProcessSettings settings = new ProcessSettings();
 
-            if(checkBox == null)
-            {
-                return;
-            }
-            if(checkBox == checkBoxGrayscale)
-            {
-                Program.toggleSetting(mImageProcessor.GREYSCALE, checkBox.Checked);
-            }
-            if(checkBox == checkBoxResize)
-            {
-                Program.toggleSetting(mImageProcessor.RESIZE, checkBox.Checked);
-            }
-
+            //Filters
+            settings.filterGrayscale = checkBoxGrayscale.Checked;    
+                    
+            //Resize
+            try
+            {   //Check that new values are valid integers
+                settings.resizeX = int.Parse(textBoxResizeNewX.Text);
+                settings.resizeY = int.Parse(textBoxResizeNewY.Text);
+                settings.resizeLockAspect = checkBoxResizeLockAspect.Checked;
+                settings.resizeEnable = checkBoxResize.Checked;
+            }            
+            catch(Exception e)
+            {   //If X or Y values are not valid, do not resize
+                Debug.WriteLine(TAG + ": " + e.Message);
+                settings.resizeEnable = false;
+            }  
+            return settings;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void textboxTextChanged(object sender, EventArgs e)
         {
-            //TODO: Merge textbox functions to single function, use onCheckedChanged() as reference
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            //TODO: Merge textbox functions to single function, use onCheckedChanged() as reference
+            TextBox textbox = sender as TextBox;
+            if(textbox != null)
+            {
+                if(textbox == textBoxResizeNewX)
+                {
+                    //TODO: Implement functionality where NewY is automatically calculated based on NewX input if lock aspect ratio is enabled
+                    return;
+                }
+                if(textbox == textBoxResizeNewY)
+                {
+                    //TODO: Implement functionality where NewX is automatically calculated based on NewY input if lock aspect ratio is enabled
+                    return;
+                }
+            }
+            return;
         }
     }
 }

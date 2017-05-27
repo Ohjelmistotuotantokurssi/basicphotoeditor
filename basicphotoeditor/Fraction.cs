@@ -10,8 +10,10 @@ namespace basicphotoeditor
     {
         /*
          * Fraction
-         * Represents fraction object
-         */ 
+         * Represents fraction object that is used by decimal to fraction conversion
+         * 
+         * Source: https://stackoverflow.com/a/32903747
+         */
         public Fraction(int n, int d)
         {
             N = n;
