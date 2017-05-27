@@ -37,21 +37,21 @@
             this.tabPageHue = new System.Windows.Forms.TabPage();
             this.tabPageBrightContSat = new System.Windows.Forms.TabPage();
             this.tabPageResize = new System.Windows.Forms.TabPage();
-            this.labelResizeOriginal = new System.Windows.Forms.Label();
-            this.textBoxResizeOrigX = new System.Windows.Forms.TextBox();
-            this.textBoxResizeOrigY = new System.Windows.Forms.TextBox();
-            this.labelResizeCross = new System.Windows.Forms.Label();
-            this.labelResizeNew = new System.Windows.Forms.Label();
-            this.textBoxResizeNewX = new System.Windows.Forms.TextBox();
-            this.labelResizeCross2 = new System.Windows.Forms.Label();
-            this.textBoxResizeNewY = new System.Windows.Forms.TextBox();
-            this.checkBoxResize = new System.Windows.Forms.CheckBox();
-            this.tabControlEffects = new System.Windows.Forms.TabControl();
-            this.checkBoxGrayscale = new System.Windows.Forms.CheckBox();
-            this.tabPageFilters = new System.Windows.Forms.TabPage();
-            this.checkBoxResizeLockAspect = new System.Windows.Forms.CheckBox();
-            this.labelResizeOldAspect = new System.Windows.Forms.Label();
             this.labelResizeNewAspect = new System.Windows.Forms.Label();
+            this.labelResizeOldAspect = new System.Windows.Forms.Label();
+            this.checkBoxResizeLockAspect = new System.Windows.Forms.CheckBox();
+            this.checkBoxResize = new System.Windows.Forms.CheckBox();
+            this.textBoxResizeNewY = new System.Windows.Forms.TextBox();
+            this.textBoxResizeNewX = new System.Windows.Forms.TextBox();
+            this.textBoxResizeOrigY = new System.Windows.Forms.TextBox();
+            this.textBoxResizeOrigX = new System.Windows.Forms.TextBox();
+            this.labelResizeCross2 = new System.Windows.Forms.Label();
+            this.labelResizeNew = new System.Windows.Forms.Label();
+            this.labelResizeCross = new System.Windows.Forms.Label();
+            this.labelResizeOriginal = new System.Windows.Forms.Label();
+            this.tabControlEffects = new System.Windows.Forms.TabControl();
+            this.tabPageFilters = new System.Windows.Forms.TabPage();
+            this.checkBoxGrayscale = new System.Windows.Forms.CheckBox();
             this.tabPageResize.SuspendLayout();
             this.tabControlEffects.SuspendLayout();
             this.tabPageFilters.SuspendLayout();
@@ -146,15 +146,67 @@
             this.tabPageResize.Text = "Resize";
             this.tabPageResize.UseVisualStyleBackColor = true;
             // 
-            // labelResizeOriginal
+            // labelResizeNewAspect
             // 
-            this.labelResizeOriginal.AutoSize = true;
-            this.labelResizeOriginal.Location = new System.Drawing.Point(3, 32);
-            this.labelResizeOriginal.Name = "labelResizeOriginal";
-            this.labelResizeOriginal.Size = new System.Drawing.Size(66, 13);
-            this.labelResizeOriginal.TabIndex = 0;
-            this.labelResizeOriginal.Text = "Original size:";
-            this.labelResizeOriginal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelResizeNewAspect.AutoSize = true;
+            this.labelResizeNewAspect.Location = new System.Drawing.Point(236, 112);
+            this.labelResizeNewAspect.Name = "labelResizeNewAspect";
+            this.labelResizeNewAspect.Size = new System.Drawing.Size(22, 13);
+            this.labelResizeNewAspect.TabIndex = 11;
+            this.labelResizeNewAspect.Text = "1:1";
+            // 
+            // labelResizeOldAspect
+            // 
+            this.labelResizeOldAspect.AutoSize = true;
+            this.labelResizeOldAspect.Location = new System.Drawing.Point(238, 52);
+            this.labelResizeOldAspect.Name = "labelResizeOldAspect";
+            this.labelResizeOldAspect.Size = new System.Drawing.Size(22, 13);
+            this.labelResizeOldAspect.TabIndex = 10;
+            this.labelResizeOldAspect.Text = "1:1";
+            // 
+            // checkBoxResizeLockAspect
+            // 
+            this.checkBoxResizeLockAspect.AutoSize = true;
+            this.checkBoxResizeLockAspect.Location = new System.Drawing.Point(112, 80);
+            this.checkBoxResizeLockAspect.Name = "checkBoxResizeLockAspect";
+            this.checkBoxResizeLockAspect.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.checkBoxResizeLockAspect.Size = new System.Drawing.Size(124, 17);
+            this.checkBoxResizeLockAspect.TabIndex = 9;
+            this.checkBoxResizeLockAspect.Text = "Maintain aspect ratio";
+            this.checkBoxResizeLockAspect.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxResize
+            // 
+            this.checkBoxResize.AutoSize = true;
+            this.checkBoxResize.Location = new System.Drawing.Point(7, 7);
+            this.checkBoxResize.Name = "checkBoxResize";
+            this.checkBoxResize.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxResize.TabIndex = 8;
+            this.checkBoxResize.Text = "Resize";
+            this.checkBoxResize.UseVisualStyleBackColor = true;
+            // 
+            // textBoxResizeNewY
+            // 
+            this.textBoxResizeNewY.Location = new System.Drawing.Point(130, 109);
+            this.textBoxResizeNewY.Name = "textBoxResizeNewY";
+            this.textBoxResizeNewY.Size = new System.Drawing.Size(100, 20);
+            this.textBoxResizeNewY.TabIndex = 7;
+            this.textBoxResizeNewY.TextChanged += new System.EventHandler(this.textboxTextChanged);
+            // 
+            // textBoxResizeNewX
+            // 
+            this.textBoxResizeNewX.Location = new System.Drawing.Point(6, 109);
+            this.textBoxResizeNewX.Name = "textBoxResizeNewX";
+            this.textBoxResizeNewX.Size = new System.Drawing.Size(100, 20);
+            this.textBoxResizeNewX.TabIndex = 5;
+            // 
+            // textBoxResizeOrigY
+            // 
+            this.textBoxResizeOrigY.Enabled = false;
+            this.textBoxResizeOrigY.Location = new System.Drawing.Point(132, 49);
+            this.textBoxResizeOrigY.Name = "textBoxResizeOrigY";
+            this.textBoxResizeOrigY.Size = new System.Drawing.Size(100, 20);
+            this.textBoxResizeOrigY.TabIndex = 2;
             // 
             // textBoxResizeOrigX
             // 
@@ -164,45 +216,6 @@
             this.textBoxResizeOrigX.Name = "textBoxResizeOrigX";
             this.textBoxResizeOrigX.Size = new System.Drawing.Size(100, 20);
             this.textBoxResizeOrigX.TabIndex = 1;
-            this.textBoxResizeOrigX.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // textBoxResizeOrigY
-            // 
-            this.textBoxResizeOrigY.Enabled = false;
-            this.textBoxResizeOrigY.Location = new System.Drawing.Point(132, 49);
-            this.textBoxResizeOrigY.Name = "textBoxResizeOrigY";
-            this.textBoxResizeOrigY.Size = new System.Drawing.Size(100, 20);
-            this.textBoxResizeOrigY.TabIndex = 2;
-            this.textBoxResizeOrigY.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
-            // labelResizeCross
-            // 
-            this.labelResizeCross.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelResizeCross.AutoSize = true;
-            this.labelResizeCross.Location = new System.Drawing.Point(112, 52);
-            this.labelResizeCross.Name = "labelResizeCross";
-            this.labelResizeCross.Size = new System.Drawing.Size(12, 13);
-            this.labelResizeCross.TabIndex = 3;
-            this.labelResizeCross.Text = "x";
-            this.labelResizeCross.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // labelResizeNew
-            // 
-            this.labelResizeNew.AutoSize = true;
-            this.labelResizeNew.Location = new System.Drawing.Point(3, 92);
-            this.labelResizeNew.Name = "labelResizeNew";
-            this.labelResizeNew.Size = new System.Drawing.Size(53, 13);
-            this.labelResizeNew.TabIndex = 4;
-            this.labelResizeNew.Text = "New size:";
-            // 
-            // textBoxResizeNewX
-            // 
-            this.textBoxResizeNewX.Location = new System.Drawing.Point(6, 109);
-            this.textBoxResizeNewX.Name = "textBoxResizeNewX";
-            this.textBoxResizeNewX.Size = new System.Drawing.Size(100, 20);
-            this.textBoxResizeNewX.TabIndex = 5;
             // 
             // labelResizeCross2
             // 
@@ -217,22 +230,37 @@
             this.labelResizeCross2.Text = "x";
             this.labelResizeCross2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBoxResizeNewY
+            // labelResizeNew
             // 
-            this.textBoxResizeNewY.Location = new System.Drawing.Point(130, 109);
-            this.textBoxResizeNewY.Name = "textBoxResizeNewY";
-            this.textBoxResizeNewY.Size = new System.Drawing.Size(100, 20);
-            this.textBoxResizeNewY.TabIndex = 7;
+            this.labelResizeNew.AutoSize = true;
+            this.labelResizeNew.Location = new System.Drawing.Point(3, 92);
+            this.labelResizeNew.Name = "labelResizeNew";
+            this.labelResizeNew.Size = new System.Drawing.Size(53, 13);
+            this.labelResizeNew.TabIndex = 4;
+            this.labelResizeNew.Text = "New size:";
             // 
-            // checkBoxResize
+            // labelResizeCross
             // 
-            this.checkBoxResize.AutoSize = true;
-            this.checkBoxResize.Location = new System.Drawing.Point(7, 7);
-            this.checkBoxResize.Name = "checkBoxResize";
-            this.checkBoxResize.Size = new System.Drawing.Size(58, 17);
-            this.checkBoxResize.TabIndex = 8;
-            this.checkBoxResize.Text = "Resize";
-            this.checkBoxResize.UseVisualStyleBackColor = true;
+            this.labelResizeCross.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelResizeCross.AutoSize = true;
+            this.labelResizeCross.Location = new System.Drawing.Point(112, 52);
+            this.labelResizeCross.Name = "labelResizeCross";
+            this.labelResizeCross.Size = new System.Drawing.Size(12, 13);
+            this.labelResizeCross.TabIndex = 3;
+            this.labelResizeCross.Text = "x";
+            this.labelResizeCross.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelResizeOriginal
+            // 
+            this.labelResizeOriginal.AutoSize = true;
+            this.labelResizeOriginal.Location = new System.Drawing.Point(3, 32);
+            this.labelResizeOriginal.Name = "labelResizeOriginal";
+            this.labelResizeOriginal.Size = new System.Drawing.Size(66, 13);
+            this.labelResizeOriginal.TabIndex = 0;
+            this.labelResizeOriginal.Text = "Original size:";
+            this.labelResizeOriginal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabControlEffects
             // 
@@ -247,17 +275,6 @@
             this.tabControlEffects.Size = new System.Drawing.Size(577, 221);
             this.tabControlEffects.TabIndex = 3;
             // 
-            // checkBoxGrayscale
-            // 
-            this.checkBoxGrayscale.AutoSize = true;
-            this.checkBoxGrayscale.Location = new System.Drawing.Point(7, 7);
-            this.checkBoxGrayscale.Name = "checkBoxGrayscale";
-            this.checkBoxGrayscale.Size = new System.Drawing.Size(73, 17);
-            this.checkBoxGrayscale.TabIndex = 0;
-            this.checkBoxGrayscale.Text = "Grayscale";
-            this.checkBoxGrayscale.UseVisualStyleBackColor = true;
-            this.checkBoxGrayscale.CheckedChanged += new System.EventHandler(this.onCheckedChanged);
-            // 
             // tabPageFilters
             // 
             this.tabPageFilters.Controls.Add(this.checkBoxGrayscale);
@@ -269,34 +286,15 @@
             this.tabPageFilters.Text = "Filters";
             this.tabPageFilters.UseVisualStyleBackColor = true;
             // 
-            // checkBoxResizeLockAspect
+            // checkBoxGrayscale
             // 
-            this.checkBoxResizeLockAspect.AutoSize = true;
-            this.checkBoxResizeLockAspect.Location = new System.Drawing.Point(112, 80);
-            this.checkBoxResizeLockAspect.Name = "checkBoxResizeLockAspect";
-            this.checkBoxResizeLockAspect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.checkBoxResizeLockAspect.Size = new System.Drawing.Size(124, 17);
-            this.checkBoxResizeLockAspect.TabIndex = 9;
-            this.checkBoxResizeLockAspect.Text = "Maintain aspect ratio";
-            this.checkBoxResizeLockAspect.UseVisualStyleBackColor = true;
-            // 
-            // labelResizeOldAspect
-            // 
-            this.labelResizeOldAspect.AutoSize = true;
-            this.labelResizeOldAspect.Location = new System.Drawing.Point(238, 52);
-            this.labelResizeOldAspect.Name = "labelResizeOldAspect";
-            this.labelResizeOldAspect.Size = new System.Drawing.Size(22, 13);
-            this.labelResizeOldAspect.TabIndex = 10;
-            this.labelResizeOldAspect.Text = "1:1";
-            // 
-            // labelResizeNewAspect
-            // 
-            this.labelResizeNewAspect.AutoSize = true;
-            this.labelResizeNewAspect.Location = new System.Drawing.Point(236, 112);
-            this.labelResizeNewAspect.Name = "labelResizeNewAspect";
-            this.labelResizeNewAspect.Size = new System.Drawing.Size(22, 13);
-            this.labelResizeNewAspect.TabIndex = 11;
-            this.labelResizeNewAspect.Text = "1:1";
+            this.checkBoxGrayscale.AutoSize = true;
+            this.checkBoxGrayscale.Location = new System.Drawing.Point(7, 7);
+            this.checkBoxGrayscale.Name = "checkBoxGrayscale";
+            this.checkBoxGrayscale.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxGrayscale.TabIndex = 0;
+            this.checkBoxGrayscale.Text = "Grayscale";
+            this.checkBoxGrayscale.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

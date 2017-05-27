@@ -33,16 +33,6 @@ namespace basicphotoeditor
 
     class mImageProcessor
     {
-        //Setting IDs
-        public const int GREYSCALE = 1;
-        public const int RESIZE = 2;
-        public const int BRIGHTNESS = 3;
-        public const int CONTRAST = 4;
-        public const int SATURATION = 5;
-        public const int HUE = 6;
-        public const int ROTATE = 7;
-        public const int LOCKEDASPECT = 8;
-
         //Converts image bytearray to greyscale bytearray
         public byte[] toGreyScale(byte[] imageBytes)
         {
@@ -64,6 +54,42 @@ namespace basicphotoeditor
                 }
             }
             return output;
+        }
+
+        //Resize image
+        public byte[] resize(byte[] imagebytes, int x, int y, bool lockAspect)
+        {
+            byte[] output;
+            using(MemoryStream inStream = new MemoryStream(imagebytes))
+            {
+                using(MemoryStream outStream = new MemoryStream())
+                {
+                    using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
+                    {
+                        if (lockAspect)
+                        {
+                            //Image is cropped to fit new dimensions while maintaining aspect ratio
+                            imageFactory
+                                .Load(inStream)
+                                .Resize(new ResizeLayer(new Size(x,y),ResizeMode.Min,AnchorPosition.Center))
+                                .Save(outStream)
+                                .Dispose();
+                        }else
+                        {
+                            //If aspect ratio is not locked, image will be stretched to fit new dimensions
+                            imageFactory
+                                .Load(inStream)
+                                .Resize(new ResizeLayer(new Size(x, y), ResizeMode.Stretch, AnchorPosition.Center))
+                                .Save(outStream)
+                                .Dispose();
+                        }
+                    }
+                    outStream.Position = 0;
+                    output = outStream.ToArray();
+                }
+            }
+            return output;
+
         }
                 
     }
