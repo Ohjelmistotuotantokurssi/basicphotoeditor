@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace basicphotoeditor
 {
@@ -73,9 +75,14 @@ namespace basicphotoeditor
             labelResizeOldAspect.Text = ratioFraction;
             labelResizeNewAspect.Text = ratioFraction;
 
+            //Color
+            trackBarBrightness.Value = 0;
+            trackBarContrast.Value = 0;
+            trackBarSaturation.Value = 0;
+
             //TODO: Initialize rest of the UI as functions are added
         }
-
+        
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
             Debug.WriteLine(TAG + ": openFileDialog1_FileOk()");
@@ -122,7 +129,14 @@ namespace basicphotoeditor
             {   //If X or Y values are not valid, do not resize
                 Debug.WriteLine(TAG + ": " + e.Message);
                 settings.resizeEnable = false;
-            }  
+            }
+
+            //Color
+            settings.colorAdjustEnable = checkBoxColour.Checked;
+            settings.brightnessValue = trackBarBrightness.Value;
+            settings.contrastValue = trackBarContrast.Value;
+            settings.saturationValue = trackBarSaturation.Value;
+
             return settings;
         }
 
@@ -131,18 +145,41 @@ namespace basicphotoeditor
             TextBox textbox = sender as TextBox;
             if(textbox != null)
             {
-                if(textbox == textBoxResizeNewX)
-                {
-                    //TODO: Implement functionality where NewY is automatically calculated based on NewX input if lock aspect ratio is enabled
+                if(textbox == textBoxResizeNewX && checkBoxResizeLockAspect.Checked)
+                {   //When aspect ratio is locked, automatically update Y-value to match X-input
+                    try
+                    {
+                        int newX = int.Parse(textbox.Text);
+                        double ratio = Program.getImageAspectRatio();
+                        textBoxResizeNewY.Text = Math.Round(newX / ratio).ToString();
+                    }catch(Exception ex)
+                    {
+                        Debug.WriteLine(TAG + ": " + ex.Message);
+                    }                                    
                     return;
                 }
-                if(textbox == textBoxResizeNewY)
-                {
-                    //TODO: Implement functionality where NewX is automatically calculated based on NewY input if lock aspect ratio is enabled
+                if(textbox == textBoxResizeNewY && checkBoxResizeLockAspect.Checked)
+                {   //When aspect ratio is locked, automatically update X-value to match Y-input
+                    try
+                    {
+                        int newY = int.Parse(textbox.Text);
+                        double ratio = Program.getImageAspectRatio();
+                        textBoxResizeNewX.Text = Math.Round(newY * ratio).ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(TAG + ": " + ex.Message);
+                    }
                     return;
                 }
             }
             return;
+        }
+
+        private void trackBarScroll(object sender, EventArgs e)
+        {
+            TrackBar trackbar = sender as TrackBar;
+            toolTipBrightnessValue.SetToolTip(trackbar, trackbar.Value.ToString());
         }
     }
 }

@@ -42,8 +42,12 @@ namespace basicphotoeditor
             {
                 tempBytes = imageProcessor.toGreyScale(tempBytes);
             }
-            if (settings.resizeEnable)
+            if (settings.colorAdjustEnable)
             {
+                tempBytes = imageProcessor.adjustColor(tempBytes,settings.brightnessValue,settings.contrastValue,settings.saturationValue);
+            }
+            if (settings.resizeEnable)
+            {   //Image resize should be done last to maintain best quality
                 tempBytes = imageProcessor.resize(tempBytes, settings.resizeX, settings.resizeY, settings.resizeLockAspect);
             }
             
