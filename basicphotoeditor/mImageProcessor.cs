@@ -19,13 +19,13 @@ namespace basicphotoeditor
     * 
     * Implements following functionalities:
     * Greyscale
-    * 
-    * TODO:
+    * Resize
     * Brightness
     * Contrast
     * Saturation
+    * 
+    * TODO:
     * Hue
-    * Resize
     * Rotate
     *  
     * 10.5.2017 - Created by Samuli Kumo
