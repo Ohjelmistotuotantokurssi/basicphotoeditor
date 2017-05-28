@@ -41,7 +41,7 @@ namespace basicphotoeditor
             {
                 using(MemoryStream outStream = new MemoryStream())
                 {
-                    using(ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
+                    using(ImageFactory imageFactory = new ImageFactory())
                     {
                         imageFactory
                             .Load(inStream)
@@ -64,14 +64,14 @@ namespace basicphotoeditor
             {
                 using(MemoryStream outStream = new MemoryStream())
                 {
-                    using (ImageFactory imageFactory = new ImageFactory(preserveExifData: true))
+                    using (ImageFactory imageFactory = new ImageFactory())
                     {
                         if (lockAspect)
                         {
                             //Image is cropped to fit new dimensions while maintaining aspect ratio
                             imageFactory
                                 .Load(inStream)
-                                .Resize(new ResizeLayer(new Size(x,y),ResizeMode.Min,AnchorPosition.Center))
+                                .Resize(new ResizeLayer(new Size(x,y),ResizeMode.Max,AnchorPosition.Center,true))
                                 .Save(outStream)
                                 .Dispose();
                         }else
@@ -79,7 +79,7 @@ namespace basicphotoeditor
                             //If aspect ratio is not locked, image will be stretched to fit new dimensions
                             imageFactory
                                 .Load(inStream)
-                                .Resize(new ResizeLayer(new Size(x, y), ResizeMode.Stretch, AnchorPosition.Center))
+                                .Resize(new ResizeLayer(new Size(x, y), ResizeMode.Stretch, AnchorPosition.Center,true))
                                 .Save(outStream)
                                 .Dispose();
                         }
@@ -91,7 +91,30 @@ namespace basicphotoeditor
             return output;
 
         }
-                
+
+        public byte[] adjustColor(byte[] imageBytes, int brightness, int contrast, int saturation)
+        {
+            byte[] output;
+            using(MemoryStream inStream = new MemoryStream(imageBytes))
+            {
+                using(MemoryStream outStream = new MemoryStream())
+                {
+                    using(ImageFactory imageFactory = new ImageFactory())
+                    {
+                        imageFactory
+                            .Load(inStream)
+                            .Brightness(brightness)
+                            .Contrast(contrast)
+                            .Saturation(saturation)
+                            .Save(outStream)
+                            .Dispose();
+                    }
+                    outStream.Position = 0;
+                    output = outStream.ToArray();
+                }
+            }            
+            return output;
+        }
     }
 
 

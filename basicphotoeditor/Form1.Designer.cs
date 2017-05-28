@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonOpen = new System.Windows.Forms.Button();
             this.textBoxFilepath = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -36,6 +37,16 @@
             this.tabPageRotate = new System.Windows.Forms.TabPage();
             this.tabPageHue = new System.Windows.Forms.TabPage();
             this.tabPageBrightContSat = new System.Windows.Forms.TabPage();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.labelBrightness = new System.Windows.Forms.Label();
+            this.pictureBoxBrightnessGradient = new System.Windows.Forms.PictureBox();
+            this.trackBarBrightness = new System.Windows.Forms.TrackBar();
+            this.labelContrast = new System.Windows.Forms.Label();
+            this.trackBarContrast = new System.Windows.Forms.TrackBar();
+            this.labelSaturation = new System.Windows.Forms.Label();
+            this.pictureBoxSaturationGradient = new System.Windows.Forms.PictureBox();
+            this.trackBarSaturation = new System.Windows.Forms.TrackBar();
+            this.checkBoxColour = new System.Windows.Forms.CheckBox();
             this.tabPageResize = new System.Windows.Forms.TabPage();
             this.labelResizeNewAspect = new System.Windows.Forms.Label();
             this.labelResizeOldAspect = new System.Windows.Forms.Label();
@@ -52,6 +63,14 @@
             this.tabControlEffects = new System.Windows.Forms.TabControl();
             this.tabPageFilters = new System.Windows.Forms.TabPage();
             this.checkBoxGrayscale = new System.Windows.Forms.CheckBox();
+            this.toolTipBrightnessValue = new System.Windows.Forms.ToolTip(this.components);
+            this.tabPageBrightContSat.SuspendLayout();
+            this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBrightnessGradient)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBrightness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarContrast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSaturationGradient)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSaturation)).BeginInit();
             this.tabPageResize.SuspendLayout();
             this.tabControlEffects.SuspendLayout();
             this.tabPageFilters.SuspendLayout();
@@ -82,7 +101,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(12, 269);
+            this.buttonSave.Location = new System.Drawing.Point(12, 344);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 2;
@@ -99,7 +118,7 @@
             this.tabPageRotate.Location = new System.Drawing.Point(4, 22);
             this.tabPageRotate.Name = "tabPageRotate";
             this.tabPageRotate.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageRotate.Size = new System.Drawing.Size(569, 195);
+            this.tabPageRotate.Size = new System.Drawing.Size(569, 270);
             this.tabPageRotate.TabIndex = 4;
             this.tabPageRotate.Text = "Rotate";
             this.tabPageRotate.UseVisualStyleBackColor = true;
@@ -109,20 +128,134 @@
             this.tabPageHue.Location = new System.Drawing.Point(4, 22);
             this.tabPageHue.Name = "tabPageHue";
             this.tabPageHue.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHue.Size = new System.Drawing.Size(569, 195);
+            this.tabPageHue.Size = new System.Drawing.Size(569, 270);
             this.tabPageHue.TabIndex = 2;
             this.tabPageHue.Text = "Hue";
             this.tabPageHue.UseVisualStyleBackColor = true;
             // 
             // tabPageBrightContSat
             // 
+            this.tabPageBrightContSat.Controls.Add(this.flowLayoutPanel1);
+            this.tabPageBrightContSat.Controls.Add(this.checkBoxColour);
             this.tabPageBrightContSat.Location = new System.Drawing.Point(4, 22);
             this.tabPageBrightContSat.Name = "tabPageBrightContSat";
             this.tabPageBrightContSat.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageBrightContSat.Size = new System.Drawing.Size(569, 195);
+            this.tabPageBrightContSat.Size = new System.Drawing.Size(569, 270);
             this.tabPageBrightContSat.TabIndex = 1;
             this.tabPageBrightContSat.Text = "Brightness, Contrast & Saturation";
             this.tabPageBrightContSat.UseVisualStyleBackColor = true;
+            // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Controls.Add(this.labelBrightness);
+            this.flowLayoutPanel1.Controls.Add(this.pictureBoxBrightnessGradient);
+            this.flowLayoutPanel1.Controls.Add(this.trackBarBrightness);
+            this.flowLayoutPanel1.Controls.Add(this.labelContrast);
+            this.flowLayoutPanel1.Controls.Add(this.trackBarContrast);
+            this.flowLayoutPanel1.Controls.Add(this.labelSaturation);
+            this.flowLayoutPanel1.Controls.Add(this.pictureBoxSaturationGradient);
+            this.flowLayoutPanel1.Controls.Add(this.trackBarSaturation);
+            this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 30);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(560, 234);
+            this.flowLayoutPanel1.TabIndex = 7;
+            // 
+            // labelBrightness
+            // 
+            this.labelBrightness.AutoSize = true;
+            this.labelBrightness.Location = new System.Drawing.Point(3, 0);
+            this.labelBrightness.Name = "labelBrightness";
+            this.labelBrightness.Size = new System.Drawing.Size(56, 13);
+            this.labelBrightness.TabIndex = 1;
+            this.labelBrightness.Text = "Brightness";
+            // 
+            // pictureBoxBrightnessGradient
+            // 
+            this.pictureBoxBrightnessGradient.Image = global::basicphotoeditor.Properties.Resources.gradientBrightness;
+            this.pictureBoxBrightnessGradient.InitialImage = global::basicphotoeditor.Properties.Resources.gradientBrightness;
+            this.pictureBoxBrightnessGradient.Location = new System.Drawing.Point(3, 16);
+            this.pictureBoxBrightnessGradient.Name = "pictureBoxBrightnessGradient";
+            this.pictureBoxBrightnessGradient.Size = new System.Drawing.Size(554, 13);
+            this.pictureBoxBrightnessGradient.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxBrightnessGradient.TabIndex = 7;
+            this.pictureBoxBrightnessGradient.TabStop = false;
+            // 
+            // trackBarBrightness
+            // 
+            this.trackBarBrightness.BackColor = System.Drawing.Color.White;
+            this.trackBarBrightness.CausesValidation = false;
+            this.trackBarBrightness.Cursor = System.Windows.Forms.Cursors.Default;
+            this.trackBarBrightness.Location = new System.Drawing.Point(3, 35);
+            this.trackBarBrightness.Maximum = 100;
+            this.trackBarBrightness.Minimum = -100;
+            this.trackBarBrightness.Name = "trackBarBrightness";
+            this.trackBarBrightness.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.trackBarBrightness.Size = new System.Drawing.Size(554, 45);
+            this.trackBarBrightness.TabIndex = 2;
+            this.trackBarBrightness.Scroll += new System.EventHandler(this.trackBarScroll);
+            // 
+            // labelContrast
+            // 
+            this.labelContrast.AutoSize = true;
+            this.labelContrast.Location = new System.Drawing.Point(3, 83);
+            this.labelContrast.Name = "labelContrast";
+            this.labelContrast.Size = new System.Drawing.Size(46, 13);
+            this.labelContrast.TabIndex = 3;
+            this.labelContrast.Text = "Contrast";
+            // 
+            // trackBarContrast
+            // 
+            this.trackBarContrast.BackColor = System.Drawing.Color.White;
+            this.trackBarContrast.Location = new System.Drawing.Point(3, 99);
+            this.trackBarContrast.Maximum = 100;
+            this.trackBarContrast.Name = "trackBarContrast";
+            this.trackBarContrast.Size = new System.Drawing.Size(554, 45);
+            this.trackBarContrast.TabIndex = 4;
+            this.trackBarContrast.Value = 50;
+            this.trackBarContrast.Scroll += new System.EventHandler(this.trackBarScroll);
+            // 
+            // labelSaturation
+            // 
+            this.labelSaturation.AutoSize = true;
+            this.labelSaturation.Location = new System.Drawing.Point(3, 147);
+            this.labelSaturation.Name = "labelSaturation";
+            this.labelSaturation.Size = new System.Drawing.Size(55, 13);
+            this.labelSaturation.TabIndex = 4;
+            this.labelSaturation.Text = "Saturation";
+            // 
+            // pictureBoxSaturationGradient
+            // 
+            this.pictureBoxSaturationGradient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBoxSaturationGradient.Image = global::basicphotoeditor.Properties.Resources.gradientSaturation;
+            this.pictureBoxSaturationGradient.InitialImage = global::basicphotoeditor.Properties.Resources.gradientSaturation;
+            this.pictureBoxSaturationGradient.Location = new System.Drawing.Point(3, 163);
+            this.pictureBoxSaturationGradient.Name = "pictureBoxSaturationGradient";
+            this.pictureBoxSaturationGradient.Size = new System.Drawing.Size(554, 13);
+            this.pictureBoxSaturationGradient.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxSaturationGradient.TabIndex = 6;
+            this.pictureBoxSaturationGradient.TabStop = false;
+            // 
+            // trackBarSaturation
+            // 
+            this.trackBarSaturation.BackColor = System.Drawing.Color.White;
+            this.trackBarSaturation.Location = new System.Drawing.Point(3, 182);
+            this.trackBarSaturation.Maximum = 100;
+            this.trackBarSaturation.Name = "trackBarSaturation";
+            this.trackBarSaturation.Size = new System.Drawing.Size(554, 45);
+            this.trackBarSaturation.TabIndex = 5;
+            this.trackBarSaturation.Value = 50;
+            this.trackBarSaturation.Scroll += new System.EventHandler(this.trackBarScroll);
+            // 
+            // checkBoxColour
+            // 
+            this.checkBoxColour.AutoSize = true;
+            this.checkBoxColour.Location = new System.Drawing.Point(7, 7);
+            this.checkBoxColour.Name = "checkBoxColour";
+            this.checkBoxColour.Size = new System.Drawing.Size(65, 17);
+            this.checkBoxColour.TabIndex = 0;
+            this.checkBoxColour.Text = "Enabled";
+            this.checkBoxColour.UseVisualStyleBackColor = true;
             // 
             // tabPageResize
             // 
@@ -141,7 +274,7 @@
             this.tabPageResize.Location = new System.Drawing.Point(4, 22);
             this.tabPageResize.Name = "tabPageResize";
             this.tabPageResize.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageResize.Size = new System.Drawing.Size(569, 195);
+            this.tabPageResize.Size = new System.Drawing.Size(569, 270);
             this.tabPageResize.TabIndex = 3;
             this.tabPageResize.Text = "Resize";
             this.tabPageResize.UseVisualStyleBackColor = true;
@@ -180,9 +313,9 @@
             this.checkBoxResize.AutoSize = true;
             this.checkBoxResize.Location = new System.Drawing.Point(7, 7);
             this.checkBoxResize.Name = "checkBoxResize";
-            this.checkBoxResize.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxResize.Size = new System.Drawing.Size(65, 17);
             this.checkBoxResize.TabIndex = 8;
-            this.checkBoxResize.Text = "Resize";
+            this.checkBoxResize.Text = "Enabled";
             this.checkBoxResize.UseVisualStyleBackColor = true;
             // 
             // textBoxResizeNewY
@@ -199,6 +332,7 @@
             this.textBoxResizeNewX.Name = "textBoxResizeNewX";
             this.textBoxResizeNewX.Size = new System.Drawing.Size(100, 20);
             this.textBoxResizeNewX.TabIndex = 5;
+            this.textBoxResizeNewX.TextChanged += new System.EventHandler(this.textboxTextChanged);
             // 
             // textBoxResizeOrigY
             // 
@@ -272,7 +406,7 @@
             this.tabControlEffects.Location = new System.Drawing.Point(12, 42);
             this.tabControlEffects.Name = "tabControlEffects";
             this.tabControlEffects.SelectedIndex = 0;
-            this.tabControlEffects.Size = new System.Drawing.Size(577, 221);
+            this.tabControlEffects.Size = new System.Drawing.Size(577, 296);
             this.tabControlEffects.TabIndex = 3;
             // 
             // tabPageFilters
@@ -281,7 +415,7 @@
             this.tabPageFilters.Location = new System.Drawing.Point(4, 22);
             this.tabPageFilters.Name = "tabPageFilters";
             this.tabPageFilters.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageFilters.Size = new System.Drawing.Size(569, 195);
+            this.tabPageFilters.Size = new System.Drawing.Size(569, 270);
             this.tabPageFilters.TabIndex = 0;
             this.tabPageFilters.Text = "Filters";
             this.tabPageFilters.UseVisualStyleBackColor = true;
@@ -300,13 +434,22 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 319);
+            this.ClientSize = new System.Drawing.Size(601, 379);
             this.Controls.Add(this.tabControlEffects);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.textBoxFilepath);
             this.Controls.Add(this.buttonOpen);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.tabPageBrightContSat.ResumeLayout(false);
+            this.tabPageBrightContSat.PerformLayout();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBrightnessGradient)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarBrightness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarContrast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSaturationGradient)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarSaturation)).EndInit();
             this.tabPageResize.ResumeLayout(false);
             this.tabPageResize.PerformLayout();
             this.tabControlEffects.ResumeLayout(false);
@@ -343,6 +486,17 @@
         private System.Windows.Forms.Label labelResizeNewAspect;
         private System.Windows.Forms.Label labelResizeOldAspect;
         private System.Windows.Forms.CheckBox checkBoxResizeLockAspect;
+        private System.Windows.Forms.Label labelBrightness;
+        private System.Windows.Forms.CheckBox checkBoxColour;
+        private System.Windows.Forms.TrackBar trackBarContrast;
+        private System.Windows.Forms.Label labelContrast;
+        private System.Windows.Forms.TrackBar trackBarBrightness;
+        private System.Windows.Forms.TrackBar trackBarSaturation;
+        private System.Windows.Forms.Label labelSaturation;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.PictureBox pictureBoxSaturationGradient;
+        private System.Windows.Forms.PictureBox pictureBoxBrightnessGradient;
+        private System.Windows.Forms.ToolTip toolTipBrightnessValue;
     }
 }
 
