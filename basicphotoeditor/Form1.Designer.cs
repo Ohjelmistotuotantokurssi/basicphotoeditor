@@ -186,6 +186,7 @@
             this.trackBarBrightness.BackColor = System.Drawing.Color.White;
             this.trackBarBrightness.CausesValidation = false;
             this.trackBarBrightness.Cursor = System.Windows.Forms.Cursors.Default;
+            this.trackBarBrightness.LargeChange = 10;
             this.trackBarBrightness.Location = new System.Drawing.Point(3, 35);
             this.trackBarBrightness.Maximum = 100;
             this.trackBarBrightness.Minimum = -100;
@@ -207,12 +208,13 @@
             // trackBarContrast
             // 
             this.trackBarContrast.BackColor = System.Drawing.Color.White;
+            this.trackBarContrast.LargeChange = 10;
             this.trackBarContrast.Location = new System.Drawing.Point(3, 99);
             this.trackBarContrast.Maximum = 100;
+            this.trackBarContrast.Minimum = -100;
             this.trackBarContrast.Name = "trackBarContrast";
             this.trackBarContrast.Size = new System.Drawing.Size(554, 45);
             this.trackBarContrast.TabIndex = 4;
-            this.trackBarContrast.Value = 50;
             this.trackBarContrast.Scroll += new System.EventHandler(this.trackBarScroll);
             // 
             // labelSaturation
@@ -239,12 +241,13 @@
             // trackBarSaturation
             // 
             this.trackBarSaturation.BackColor = System.Drawing.Color.White;
+            this.trackBarSaturation.LargeChange = 10;
             this.trackBarSaturation.Location = new System.Drawing.Point(3, 182);
             this.trackBarSaturation.Maximum = 100;
+            this.trackBarSaturation.Minimum = -100;
             this.trackBarSaturation.Name = "trackBarSaturation";
             this.trackBarSaturation.Size = new System.Drawing.Size(554, 45);
-            this.trackBarSaturation.TabIndex = 5;
-            this.trackBarSaturation.Value = 50;
+            this.trackBarSaturation.TabIndex = 6;
             this.trackBarSaturation.Scroll += new System.EventHandler(this.trackBarScroll);
             // 
             // checkBoxColour

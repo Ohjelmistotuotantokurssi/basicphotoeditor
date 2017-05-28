@@ -77,8 +77,8 @@ namespace basicphotoeditor
 
             //Color
             trackBarBrightness.Value = 0;
-            trackBarContrast.Value = 50;
-            trackBarSaturation.Value = 50;
+            trackBarContrast.Value = 0;
+            trackBarSaturation.Value = 0;
 
             //TODO: Initialize rest of the UI as functions are added
         }
