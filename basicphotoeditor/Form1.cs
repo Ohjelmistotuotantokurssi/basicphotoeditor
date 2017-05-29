@@ -128,10 +128,12 @@ namespace basicphotoeditor
                 if (x > Program.MaxX)
                 {
                     x = Program.MaxX;
+                    textBoxResizeNewX.Text = x.ToString();
                 }
                 if(y > Program.MaxY)
                 {
                     y = Program.MaxY;
+                    textBoxResizeNewY.Text = y.ToString();
                 }
                 settings.resizeX = x;
                 settings.resizeY = y;
