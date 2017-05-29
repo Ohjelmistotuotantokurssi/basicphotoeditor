@@ -90,7 +90,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="resources\gradientHue.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="resources\gradientBrightness.png" />
   </ItemGroup>

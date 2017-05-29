@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 using System.Drawing;
 using ImageProcessor.Imaging;
 using ImageProcessor;
-using System.Diagnostics;
 using ImageProcessor.Imaging.Filters.Photo;
 
 namespace basicphotoeditor
@@ -23,8 +17,6 @@ namespace basicphotoeditor
     * Brightness
     * Contrast
     * Saturation
-    * 
-    * TODO:
     * Hue
     * Rotate
     *  
@@ -71,7 +63,7 @@ namespace basicphotoeditor
                             //Image is cropped to fit new dimensions while maintaining aspect ratio
                             imageFactory
                                 .Load(inStream)
-                                .Resize(new ResizeLayer(new Size(x,y),ResizeMode.Max,AnchorPosition.Center,true))
+                                .Resize(new ResizeLayer(new Size(x,y),ResizeMode.Max))
                                 .Save(outStream)
                                 .Dispose();
                         }else
@@ -79,7 +71,7 @@ namespace basicphotoeditor
                             //If aspect ratio is not locked, image will be stretched to fit new dimensions
                             imageFactory
                                 .Load(inStream)
-                                .Resize(new ResizeLayer(new Size(x, y), ResizeMode.Stretch, AnchorPosition.Center,true))
+                                .Resize(new ResizeLayer(new Size(x, y), ResizeMode.Stretch))
                                 .Save(outStream)
                                 .Dispose();
                         }
@@ -115,7 +107,48 @@ namespace basicphotoeditor
             }            
             return output;
         }
-    }
 
-
+        public byte[] adjustHue(byte[] imageBytes, int value, bool rotate)
+        {
+            byte[] output;
+            using (MemoryStream inStream = new MemoryStream(imageBytes))
+            {
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    using (ImageFactory imageFactory = new ImageFactory())
+                    {
+                        imageFactory
+                            .Load(inStream)
+                            .Hue(value,rotate)
+                            .Save(outStream)
+                            .Dispose();
+                    }
+                    outStream.Position = 0;
+                    output = outStream.ToArray();
+                }
+            }
+            return output;
+        }
+        public byte[] rotateImage(byte[] imageBytes, int degrees)
+        {
+            byte[] output;
+            using (MemoryStream inStream = new MemoryStream(imageBytes))
+            {
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    using (ImageFactory imageFactory = new ImageFactory())
+                    {
+                        imageFactory
+                            .Load(inStream)
+                            .Rotate((float)degrees)
+                            .Save(outStream)
+                            .Dispose();
+                    }
+                    outStream.Position = 0;
+                    output = outStream.ToArray();
+                }
+            }
+            return output;
+        }
+    }   
 }

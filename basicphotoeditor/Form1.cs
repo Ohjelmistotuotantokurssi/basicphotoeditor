@@ -2,8 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace basicphotoeditor
 {
@@ -13,7 +11,8 @@ namespace basicphotoeditor
 
         public Form1()
         {
-            InitializeComponent();      
+            InitializeComponent();
+            this.Text = Program.ProgramTitle; //Set window title to display app name
         }
 
         private void onClick(object sender, EventArgs e)
@@ -42,7 +41,6 @@ namespace basicphotoeditor
        
         private void openFileDialog()
         {   //This function initializes and opens file picker dialog
-
             Debug.WriteLine(TAG + ": openFileDialog()");
             this.openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Title = "Select image file";
@@ -55,13 +53,13 @@ namespace basicphotoeditor
                 string filepath = openFileDialog1.FileName;
                 Debug.WriteLine(filepath);                
                 Program.loadImage(filepath);
-                initializeUI();
+                updateUI();
             }
         }
-        private void initializeUI()
+        private void updateUI()
         {
             //Main UI
-            setTextBox(Program.getImage().getPath());
+            setTextBox(Program.getImage().getPath());            
 
             //Resize
             int x = Program.getImageX();
@@ -80,7 +78,11 @@ namespace basicphotoeditor
             trackBarContrast.Value = 0;
             trackBarSaturation.Value = 0;
 
-            //TODO: Initialize rest of the UI as functions are added
+            //Hue
+            trackBarHue.Value = 0;
+
+            //Rotate
+            trackBarRotate.Value = 0;            
         }
         
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
@@ -120,15 +122,29 @@ namespace basicphotoeditor
             //Resize
             try
             {   //Check that new values are valid integers
-                settings.resizeX = int.Parse(textBoxResizeNewX.Text);
-                settings.resizeY = int.Parse(textBoxResizeNewY.Text);
+                int x = int.Parse(textBoxResizeNewX.Text);
+                int y = int.Parse(textBoxResizeNewY.Text);
+                //Do not allow extremely large images, define maximum X and Y values are in Program.cs
+                if (x > Program.MaxX)
+                {
+                    x = Program.MaxX;
+                }
+                if(y > Program.MaxY)
+                {
+                    y = Program.MaxY;
+                }
+                settings.resizeX = x;
+                settings.resizeY = y;
                 settings.resizeLockAspect = checkBoxResizeLockAspect.Checked;
                 settings.resizeEnable = checkBoxResize.Checked;
             }            
             catch(Exception e)
             {   //If X or Y values are not valid, do not resize
                 Debug.WriteLine(TAG + ": " + e.Message);
+                //Rollback values
                 settings.resizeEnable = false;
+                textBoxResizeNewX.Text = Program.getImageX().ToString();
+                textBoxResizeNewY.Text = Program.getImageY().ToString();
             }
 
             //Color
@@ -137,28 +153,43 @@ namespace basicphotoeditor
             settings.contrastValue = trackBarContrast.Value;
             settings.saturationValue = trackBarSaturation.Value;
 
+            //Hue
+            settings.hueEnable = checkBoxHue.Checked;
+            settings.hueValue = 180 + trackBarHue.Value;
+            settings.hueRotate = checkBoxHueRotate.Checked;
+
+            //Rotation
+            settings.rotateEnable = checkBoxRotate.Checked;
+            settings.rotateValue = 180 + trackBarRotate.Value;
+
             return settings;
         }
 
         private void textboxTextChanged(object sender, EventArgs e)
         {
             TextBox textbox = sender as TextBox;
-            if(textbox != null)
+            if (textbox == null)
             {
-                if(textbox == textBoxResizeNewX && checkBoxResizeLockAspect.Checked)
+                return;
+            }
+            if (textbox == textBoxResizeNewX) { 
+                if (checkBoxResizeLockAspect.Checked)
                 {   //When aspect ratio is locked, automatically update Y-value to match X-input
                     try
                     {
                         int newX = int.Parse(textbox.Text);
                         double ratio = Program.getImageAspectRatio();
                         textBoxResizeNewY.Text = Math.Round(newX / ratio).ToString();
-                    }catch(Exception ex)
+                    } catch (Exception ex)
                     {
                         Debug.WriteLine(TAG + ": " + ex.Message);
-                    }                                    
+                    }
                     return;
                 }
-                if(textbox == textBoxResizeNewY && checkBoxResizeLockAspect.Checked)
+            }
+            else if (textbox == textBoxResizeNewY)
+            {
+                if (checkBoxResizeLockAspect.Checked)
                 {   //When aspect ratio is locked, automatically update X-value to match Y-input
                     try
                     {
@@ -179,7 +210,69 @@ namespace basicphotoeditor
         private void trackBarScroll(object sender, EventArgs e)
         {
             TrackBar trackbar = sender as TrackBar;
-            toolTipBrightnessValue.SetToolTip(trackbar, trackbar.Value.ToString());
+            toolTipTrackbarValue.SetToolTip(trackbar, trackbar.Value.ToString());
+        }
+
+        private void checkboxMouseHover(object sender, EventArgs e)
+        {
+            CheckBox checkbox = sender as CheckBox;
+
+            if(checkbox == checkBoxGrayscale)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Convert image to grayscale");
+            }
+            else if(checkbox == checkBoxResize)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Resize image");
+            }
+            else if (checkbox == checkBoxResizeLockAspect)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Preserve original aspect ratio");
+            }
+            else if(checkbox == checkBoxColour)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Adjust image color");
+            }
+            else if(checkbox == checkBoxHue)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Adjust image hue");
+            }
+            else if(checkbox == checkBoxHueRotate)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Enable to rotate hue for all colors");
+            }
+            else if(checkbox == checkBoxRotate)
+            {
+                toolTipInfo.SetToolTip(checkbox, "Rotate image");
+            }
+
+        }
+
+        private void checkboxCheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkbox = sender as CheckBox;
+
+            if(checkbox == checkBoxResizeLockAspect)
+            {   //When user locks aspect ratio, reset X and Y to baseline (original) values
+                if (checkbox.Checked)
+                {
+                    textBoxResizeNewX.Text = Program.getImageX().ToString();
+                    textBoxResizeNewY.Text = Program.getImageY().ToString();
+                }
+            }
+        }
+
+        private void textBoxMouseHover(object sender, EventArgs e)
+        {
+            TextBox textbox = sender as TextBox;
+
+            if(textbox == textBoxResizeNewX)
+            {
+                toolTipInfo.SetToolTip(textbox, "1...8000");
+            }
+            else if(textbox == textBoxResizeNewY){
+                toolTipInfo.SetToolTip(textbox, "1...8000");
+            }
         }
     }
 }

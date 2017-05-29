@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace basicphotoeditor
@@ -16,6 +12,10 @@ namespace basicphotoeditor
         /// </summary>
         private static string TAG = "Program";
         private static mImage image = new mImage();
+
+        public const string ProgramTitle = "Basic Photo Editor";
+        public const int MaxX = 8000;
+        public const int MaxY = 8000;
 
         public static bool greyScaleEnabled { get; set; }
         public static bool resizeEnabled { get; set; }
@@ -46,8 +46,16 @@ namespace basicphotoeditor
             {
                 tempBytes = imageProcessor.adjustColor(tempBytes,settings.brightnessValue,settings.contrastValue,settings.saturationValue);
             }
+            if (settings.hueEnable)
+            {
+                tempBytes = imageProcessor.adjustHue(tempBytes, settings.hueValue, settings.hueRotate);
+            }
+            if (settings.rotateEnable)
+            {
+                tempBytes = imageProcessor.rotateImage(tempBytes, settings.rotateValue);
+            }
             if (settings.resizeEnable)
-            {   //Image resize should be done last to maintain best quality
+            {   //Resize needs to be done last for best image quality
                 tempBytes = imageProcessor.resize(tempBytes, settings.resizeX, settings.resizeY, settings.resizeLockAspect);
             }
             
