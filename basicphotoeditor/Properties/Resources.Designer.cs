@@ -73,6 +73,16 @@ namespace basicphotoeditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gradientHue {
+            get {
+                object obj = ResourceManager.GetObject("gradientHue", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gradientSaturation {
             get {
                 object obj = ResourceManager.GetObject("gradientSaturation", resourceCulture);

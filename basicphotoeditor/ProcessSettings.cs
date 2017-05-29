@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace basicphotoeditor
 {
     struct ProcessSettings
@@ -23,5 +18,8 @@ namespace basicphotoeditor
         public int saturationValue { get; set; }
         public bool hueEnable { get; set; }
         public int hueValue { get; set; }
+        public bool hueRotate { get; set; }
+        public bool rotateEnable { get; set; }
+        public int rotateValue { get; set; }
     }
 }
