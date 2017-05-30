@@ -52,15 +52,15 @@ namespace basicphotoeditor
             {
                 string filepath = openFileDialog1.FileName;
                 Debug.WriteLine(filepath);                
-                Program.loadImage(filepath);
+                Program.setImagePath(filepath);
                 updateUI();
             }
         }
         private void updateUI()
         {
             //Main UI
-            setTextBox(Program.getImage().getPath());            
-
+            setTextBox(Program.Image().getPath());           
+            
             //Resize
             int x = Program.getImageX();
             int y = Program.getImageY();
@@ -92,6 +92,10 @@ namespace basicphotoeditor
 
         private void saveFileDialog(ProcessSettings settings)
         {
+            //WORKAROUND: Because user can press Save button without raising FocusLeave() on textbox, call it here manually
+            validateTextboxInput(textBoxResizeNewX);
+            validateTextboxInput(textBoxResizeNewY);
+
             this.saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Title = "Save image file";
             saveFileDialog1.Filter = "JPEG |*.JPG;*.JPEG|BMP|*.BMP;*.RLE|Compuserve GIF|*.GIF|TIFF|*.TIF;*.TIFF|PNG|*.PNG;*.PNS|Targa|*.TGA;*.VDA;*.ICB;*.VSB";
@@ -124,17 +128,7 @@ namespace basicphotoeditor
             {   //Check that new values are valid integers
                 int x = int.Parse(textBoxResizeNewX.Text);
                 int y = int.Parse(textBoxResizeNewY.Text);
-                //Do not allow extremely large images, define maximum X and Y values are in Program.cs
-                if (x > Program.MaxX)
-                {
-                    x = Program.MaxX;
-                    textBoxResizeNewX.Text = x.ToString();
-                }
-                if(y > Program.MaxY)
-                {
-                    y = Program.MaxY;
-                    textBoxResizeNewY.Text = y.ToString();
-                }
+               
                 settings.resizeX = x;
                 settings.resizeY = y;
                 settings.resizeLockAspect = checkBoxResizeLockAspect.Checked;
@@ -167,46 +161,93 @@ namespace basicphotoeditor
             return settings;
         }
 
-        private void textboxTextChanged(object sender, EventArgs e)
-        {
-            TextBox textbox = sender as TextBox;
-            if (textbox == null)
+        private void textboxFocusLeave(object sender, EventArgs e)
+        {            
+            if (sender == null)
             {
                 return;
             }
-            if (textbox == textBoxResizeNewX) { 
-                if (checkBoxResizeLockAspect.Checked)
-                {   //When aspect ratio is locked, automatically update Y-value to match X-input
-                    try
-                    {
-                        int newX = int.Parse(textbox.Text);
+            if (sender == textBoxResizeNewX || sender == textBoxResizeNewY)
+            {
+                TextBox textbox = sender as TextBox;
+                validateTextboxInput(textbox);
+                return;
+            }
+            return;
+        }
+
+        private void validateTextboxInput(TextBox textbox)
+        {   //This function can be called to check user input values for X and Y resolution and correct them if necessary
+            if (textbox == textBoxResizeNewX)
+            {
+                try
+                {
+                    mMath mMath = new mMath();
+                    int newX =  mMath.LimitToRange(int.Parse(textBoxResizeNewX.Text), Program.MinX, Program.MaxX); //Limit user input to permitted range
+
+                    if (checkBoxResizeLockAspect.Checked)
+                    {   //When aspect ratio is locked, automatically update Y-value to match X-input
                         double ratio = Program.getImageAspectRatio();
+                        int newY = (int)Math.Round(newX / ratio);
+
+                        if (newY < Program.MinY || newY > Program.MaxY)
+                        {   //If newX is too large, it has to be constrained and newY recalculated
+                            newY = new mMath().LimitToRange(newY, Program.MinY, Program.MaxY);
+                            newX = (int)Math.Round(newY * ratio);
+
+                        }
+                        textBoxResizeNewX.Text = newX.ToString();
                         textBoxResizeNewY.Text = Math.Round(newX / ratio).ToString();
-                    } catch (Exception ex)
+                        labelResizeNewAspect.Text = Program.getImageAspectRatioAsFraction(newX, newY);
+                        return;
+                    }else
                     {
-                        Debug.WriteLine(TAG + ": " + ex.Message);
-                    }
-                    return;
+                        int newY = int.Parse(textBoxResizeNewY.Text);
+                        textBoxResizeNewX.Text = newX.ToString();
+                        labelResizeNewAspect.Text = Program.getImageAspectRatioAsFraction(newX,newY);
+                        return;
+                    }                    
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(TAG + ": " + ex.Message);
                 }
             }
             else if (textbox == textBoxResizeNewY)
             {
-                if (checkBoxResizeLockAspect.Checked)
-                {   //When aspect ratio is locked, automatically update X-value to match Y-input
-                    try
-                    {
-                        int newY = int.Parse(textbox.Text);
+                try
+                {
+                    mMath mMath = new mMath();
+                    int newY = mMath.LimitToRange(int.Parse(textBoxResizeNewY.Text), Program.MinY, Program.MaxY);
+
+                    if (checkBoxResizeLockAspect.Checked)
+                    {   //When aspect ratio is locked, automatically update X-value to match Y-input
                         double ratio = Program.getImageAspectRatio();
-                        textBoxResizeNewX.Text = Math.Round(newY * ratio).ToString();
-                    }
-                    catch (Exception ex)
+                        int newX = (int)Math.Round(newY * ratio);
+
+                        if (newX < Program.MinX || newX > Program.MaxX)
+                        {   //If newX is too large, it has to be constrained and newY recalculated
+                            newX = new mMath().LimitToRange(newX, Program.MinX, Program.MaxX); //check and clamp newX value if needed
+                            newY = (int)Math.Round(newX / ratio);
+                        }
+                        textBoxResizeNewY.Text = newY.ToString();
+                        textBoxResizeNewX.Text = newX.ToString();
+                        labelResizeNewAspect.Text = Program.getImageAspectRatioAsFraction(newX, newY);      
+                        return;
+                    }else
                     {
-                        Debug.WriteLine(TAG + ": " + ex.Message);
+                        int newX = int.Parse(textBoxResizeNewX.Text);
+                        double ratio = newX / newY;
+                        textBoxResizeNewY.Text = newY.ToString();
+                        labelResizeNewAspect.Text = Program.getImageAspectRatioAsFraction(newX, newY);
+                        return;
                     }
-                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(TAG + ": " + ex.Message);
                 }
             }
-            return;
         }
 
         private void trackBarScroll(object sender, EventArgs e)

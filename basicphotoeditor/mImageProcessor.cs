@@ -43,7 +43,9 @@ namespace basicphotoeditor
                     }
                     outStream.Position = 0;
                     output = outStream.ToArray();
+                    outStream.Dispose();
                 }
+                inStream.Dispose();
             }
             return output;
         }
@@ -78,7 +80,9 @@ namespace basicphotoeditor
                     }
                     outStream.Position = 0;
                     output = outStream.ToArray();
+                    outStream.Dispose();
                 }
+                inStream.Dispose();
             }
             return output;
 
@@ -103,6 +107,7 @@ namespace basicphotoeditor
                     }
                     outStream.Position = 0;
                     output = outStream.ToArray();
+                    outStream.Dispose();
                 }
             }            
             return output;
@@ -125,7 +130,9 @@ namespace basicphotoeditor
                     }
                     outStream.Position = 0;
                     output = outStream.ToArray();
+                    outStream.Dispose();
                 }
+                inStream.Dispose();
             }
             return output;
         }
@@ -146,7 +153,9 @@ namespace basicphotoeditor
                     }
                     outStream.Position = 0;
                     output = outStream.ToArray();
+                    outStream.Dispose();
                 }
+                inStream.Dispose();
             }
             return output;
         }

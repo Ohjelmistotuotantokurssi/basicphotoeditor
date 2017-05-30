@@ -3,15 +3,29 @@
 namespace basicphotoeditor
 {
     class mMath
-    {
+    {      
         /*
-         * mMath
-         * This class contains additional mathematical operations
-         * Remember to credit your sources! 
-         * 
-         * 24.5.2017 - Created by Samuli Kumo
-         */
+        * mMath
+        * This class contains additional mathematical operations
+        * Remember to credit your sources! 
+        * 
+        * 24.5.2017 - Created by Samuli Kumo
+        */
 
+        //Limit integer value to given range
+        public int LimitToRange(int value, int min, int max)
+        {
+            if(value < min)
+            {
+                return min;
+            }else if(value>max)
+            {
+                return max;
+            }else
+            {
+                return value;
+            }
+        }
 
         /*
          * RealToFraction converter function
@@ -69,7 +83,7 @@ namespace basicphotoeditor
             while (Math.Abs(value - (double)numerator / denominator) > maxError && z != (int)z);
 
             return new Fraction((n * denominator + numerator) * sign, denominator);
-        }     
-        // End of RealToFraction converter.
+        }
+
     }
 }

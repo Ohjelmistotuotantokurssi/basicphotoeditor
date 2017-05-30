@@ -452,7 +452,7 @@
             this.textBoxResizeNewY.Name = "textBoxResizeNewY";
             this.textBoxResizeNewY.Size = new System.Drawing.Size(100, 20);
             this.textBoxResizeNewY.TabIndex = 7;
-            this.textBoxResizeNewY.TextChanged += new System.EventHandler(this.textboxTextChanged);
+            this.textBoxResizeNewY.Leave += new System.EventHandler(this.textboxFocusLeave);
             this.textBoxResizeNewY.MouseHover += new System.EventHandler(this.textBoxMouseHover);
             // 
             // textBoxResizeNewX
@@ -461,8 +461,8 @@
             this.textBoxResizeNewX.Name = "textBoxResizeNewX";
             this.textBoxResizeNewX.Size = new System.Drawing.Size(100, 20);
             this.textBoxResizeNewX.TabIndex = 5;
-            this.textBoxResizeNewX.TextChanged += new System.EventHandler(this.textboxTextChanged);
-            this.textBoxResizeNewX.MouseHover += new System.EventHandler(this.textBoxMouseHover);
+            this.textBoxResizeNewX.Leave += new System.EventHandler(this.textboxFocusLeave);
+            this.textBoxResizeNewX.MouseHover += new System.EventHandler(this.checkboxMouseHover);
             // 
             // textBoxResizeOrigY
             // 

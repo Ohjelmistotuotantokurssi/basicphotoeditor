@@ -11,9 +11,15 @@ namespace basicphotoeditor
         /// The main entry point for the application.
         /// </summary>
         private static string TAG = "Program";
-        private static mImage image = new mImage();
+        private static string filepath;
+        private static mImageProcessor imageProcessor;
+        private static mImage image;
+        private static byte[] imageBytes = null;
+        private static byte[] outputBytes = null;
 
         public const string ProgramTitle = "Basic Photo Editor";
+        public const int MinX = 2;
+        public const int MinY = 2;
         public const int MaxX = 8000;
         public const int MaxY = 8000;
 
@@ -33,55 +39,64 @@ namespace basicphotoeditor
 
         public static void saveImage(string path,ProcessSettings settings)
         {
-            mImageProcessor imageProcessor = new mImageProcessor();
-            byte[] imageBytes = image.getByteArray();
-            byte[] tempBytes = imageBytes;
-            byte[] outputBytes = null;          
+            if (!image.fileExists())
+            {
+                return;
+            }
+            imageProcessor = new mImageProcessor();
+            imageBytes = image.getByteArray();
+            outputBytes = imageBytes;        
 
             if (settings.filterGrayscale)
             {
-                tempBytes = imageProcessor.toGreyScale(tempBytes);
+                outputBytes = imageProcessor.toGreyScale(outputBytes);
             }
             if (settings.colorAdjustEnable)
             {
-                tempBytes = imageProcessor.adjustColor(tempBytes,settings.brightnessValue,settings.contrastValue,settings.saturationValue);
+                outputBytes = imageProcessor.adjustColor(outputBytes, settings.brightnessValue,settings.contrastValue,settings.saturationValue);
             }
             if (settings.hueEnable)
             {
-                tempBytes = imageProcessor.adjustHue(tempBytes, settings.hueValue, settings.hueRotate);
+                outputBytes = imageProcessor.adjustHue(outputBytes, settings.hueValue, settings.hueRotate);
             }
             if (settings.rotateEnable)
             {
-                tempBytes = imageProcessor.rotateImage(tempBytes, settings.rotateValue);
+                outputBytes = imageProcessor.rotateImage(outputBytes, settings.rotateValue);
             }
             if (settings.resizeEnable)
             {   //Resize needs to be done last for best image quality
-                tempBytes = imageProcessor.resize(tempBytes, settings.resizeX, settings.resizeY, settings.resizeLockAspect);
+                outputBytes = imageProcessor.resize(outputBytes, settings.resizeX, settings.resizeY, settings.resizeLockAspect);
             }
-            
-            outputBytes = tempBytes;
             if(outputBytes != null)
             {
-                writeFile(outputBytes, path);               
+                writeFile(outputBytes, path); //save to file
+                //clear byte arrays to free up memory
+                imageBytes = null;
+                outputBytes = null;  
             }
         }
 
-        public static void writeFile(byte[] outputBytes, string path)
+        public static void writeFile(byte[] output, string path)
         {
-            File.WriteAllBytes(path, outputBytes);
+            //Use FileStream rather than File for better memory management with extremely large image files
+            using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
+            {
+                fs.Write(output, 0, output.Length);    
+                fs.Close();
+            }
             if (!File.Exists(path))
             {
                 Debug.WriteLine(TAG + ": ERROR: writeFile(): File not saved");
-            }
+            }            
+        }
+        public static void setImagePath(string newPath)
+        {
+            filepath = newPath;
         }
 
-        public static void loadImage(string filepath)
+        public static mImage Image()
         {
-            image.setPath(filepath);
-        }
-
-        public static mImage getImage()
-        {
+            image = new mImage(filepath);
             return image;
         }
 
@@ -119,6 +134,17 @@ namespace basicphotoeditor
             mMath math = new mMath();
             Fraction fraction = math.RealToFraction(ratio, 0.01);
             return fraction.N.ToString() + ":" + fraction.D.ToString();
-        } 
+        }
+        public static string getImageAspectRatioAsFraction(int x, int y)
+        {
+            double ratio = (double)x / (double)y;
+            mMath math = new mMath();
+            Fraction fraction = math.RealToFraction(ratio, 0.01);
+            return fraction.N.ToString() + ":" + fraction.D.ToString();
+        }
+        public static void showMessageBox(string message)
+        {
+            MessageBox.Show(message);
+        }
     }
 }
