@@ -7,6 +7,14 @@ namespace basicphotoeditor
 {
     public partial class Form1 : Form
     { 
+        /* 
+         * Form1
+         * 
+         * Main UI form that contains all user-interface functionalities
+         * 
+         * 14.5.2017 - Created by Samuli Kumo 
+         */
+         
         private string TAG = "Form1"; //Use tag in debug messages to identify source class
 
         public Form1()
