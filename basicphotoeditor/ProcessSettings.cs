@@ -6,6 +6,8 @@ namespace basicphotoeditor
         /*
          * ProcessSettings 
          * Use this structure to store and pass processing settings from UI to image processing
+         *
+         * 24.5.2017 - Created by Samuli Kumo
          */
         public bool filterGrayscale { get; set; }
         public bool resizeEnable { get; set; }
