@@ -40,13 +40,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B290E459C6D70FCBC2C4AAB1BB6D8059"
+        "OwnerKey" = "8:_02183B0C0D55A527E38157F92ED36C22"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_02183B0C0D55A527E38157F92ED36C22"
+        "OwnerKey" = "8:_B290E459C6D70FCBC2C4AAB1BB6D8059"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -74,6 +74,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
         "Release"
@@ -143,11 +151,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_02183B0C0D55A527E38157F92ED36C22"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -174,11 +177,6 @@
             "AssemblyAsmDisplayName" = "8:ImageProcessor, Version=2.5.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B290E459C6D70FCBC2C4AAB1BB6D8059"
-                    {
-                    "Name" = "8:ImageProcessor.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ImageProcessor.dll"
             "TargetName" = "8:"
@@ -375,6 +373,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7052F443BF824A69A9E59F96D85DAEB5"
+            {
+            "Name" = "8:Basic Photo Editor"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_8C415FD96B834476953F4EFC8A96CBC7"
+            "Folder" = "8:_9D910077E9414DAE8BBAD009C1E6B431"
+            "WorkingFolder" = "8:_76952CF2F1E0463B97D0EEAAA504C1A0"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
