@@ -7,6 +7,14 @@ namespace basicphotoeditor
 {
     static class Program
     {
+        /* 
+         * Program.cs
+         * 
+         * Main class for the program, acts as an interface between UI and other classes
+         * 
+         * 14.5.2017 - Created by Samuli Kumo 
+         */
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
